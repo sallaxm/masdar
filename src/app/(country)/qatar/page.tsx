@@ -16,21 +16,26 @@ export default function QatarPage() {
   );
 
   useEffect(() => {
-    const params = new URLSearchParams();
-    params.set("country", "qatar");
-    if (q) params.set("q", q);
-    if (category !== "All") params.set("category", category);
+    const params = new URLSearchParams({ country: "qatar" });
+
+    if (q) {
+      params.set("q", q);
+    }
+
+    if (category !== "All") {
+      params.set("category", category);
+    }
 
     fetch(`/api/items?${params.toString()}`)
-      .then((r) => r.json())
-      .then((d) => setItems(d.items ?? []));
+      .then((response) => response.json())
+      .then((data) => setItems(data.items ?? []));
   }, [q, category]);
 
   return (
     <main data-theme="qatar" className="space-y-6 bg-glow">
       <TopBar
         title="Qatar"
-        subtitle="Official updates timeline (mock data for now)"
+        subtitle="Qatar-only timeline from official ministries and agencies"
         categories={categories}
         onSearch={setQ}
         onCategory={setCategory}
